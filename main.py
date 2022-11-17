@@ -19,7 +19,7 @@ class MyData:
         return
 
     def new_data():
-        print(f'{MyData.nme}, {MyData.sze}, {MyData.tme}, {MyData.sts},')
+        #print(f'{MyData.nme}, {MyData.sze}, {MyData.tme}, {MyData.sts},')
         name = input('Name: ')
         MyData.nme.append(name)
         size = input('Size: ')    
@@ -111,10 +111,10 @@ class MyData:
         index = temp.index(x)
         #print(index)
         #print(temp)
-        MyData.nme.pop(index)
-        MyData.sze.pop(index)
-        MyData.tme.pop(index)
-        MyData.sts.pop(index)
+        MyData.nme.clear()
+        MyData.sze.clear()
+        MyData.tme.clear()
+        MyData.sts.clear()
         if x in temp:
             MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
             MyData.save_data()
