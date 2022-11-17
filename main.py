@@ -60,6 +60,14 @@ def update(x):
         print(df)
         df.to_csv('waitlist.csv', index=False)
         print('Updated Name!')
+        
+def remove(x):
+    global df
+    if x in df['Name'].values.tolist():
+        df.drop(df.index[df['Name'] == x], inplace=True)
+        print(df)
+        df.to_csv('waitlist.csv', index=False)
+        print('Removed Name!')
             
 #Initialize
 if exists('waitlist.csv'):
@@ -81,6 +89,7 @@ while count < 1000:
         name = input('Who would you like to Update?: \n')
         update(name)
     if 'remove' in q:
-        pass
+        name = input('Who would you like to Remove?: \n')
+        remove(name)
     if 'show' in q:
         show()
