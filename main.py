@@ -30,7 +30,7 @@ def new_data():
 
 def save_data():
     global df
-    df.to_csv('waitlist.csv')
+    df.to_csv('waitlist.csv', index=False)
     print('Saving Data...')
 
 def load_data():
@@ -54,14 +54,13 @@ def show():
 
 def update(x):
     global df
-    for item in df['Name'].values.tolist():
-        if x in item:
-            new_name = input('New Name: ')
-            df['Name'] = df['Name'].replace([x], new_name)
-            df.to_csv('waitlist.csv')
-            print('Updated Name!')
-            print(df.index[df[x]].tolist())
-
+    if x in df['Name'].values.tolist():
+        new_name = input('New Name: ')
+        df['Name'] = df['Name'].replace([x], new_name)
+        print(df)
+        df.to_csv('waitlist.csv', index=False)
+        print('Updated Name!')
+            
 #Initialize
 if exists('waitlist.csv'):
     load_data()
