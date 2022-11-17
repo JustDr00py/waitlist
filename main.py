@@ -67,12 +67,6 @@ class MyData:
         MyData.df.to_csv('waitlist.csv', index=False)
         print('Updated Party Size!')
             
-        """new_size = input('New Party Size: ')
-        MyData.df['Party Size'] = MyData.df['Party Size'].replace([x], new_size)
-        print(MyData.df)
-        
-        """
-            
     def remove(x):
         if x in MyData.df['Name'].values.tolist():
             MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
