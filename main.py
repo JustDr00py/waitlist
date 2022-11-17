@@ -58,17 +58,17 @@ class MyData:
             
     def remove(x):
         if x in MyData.df['Name'].values.tolist():
-            df.drop(df.index[MyData.df['Name'] == x], inplace=True)
+            MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
             print(MyData.df)
-            df.to_csv('waitlist.csv', index=False)
+            MyData.df.to_csv('waitlist.csv', index=False)
             print('Removed Name!')
             
 #Initialize
 if exists('waitlist.csv'):
     MyData.load_data()
 else:
-    df = pd.DataFrame(MyData.data)
-    df.to_csv('waitlist.csv')
+    MyData.df = pd.DataFrame(MyData.data)
+    MyData.df.to_csv('waitlist.csv')
 
 #Main Loop
 while True:
