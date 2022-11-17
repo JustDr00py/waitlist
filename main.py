@@ -1,7 +1,7 @@
 import pandas as pd
 from time import sleep
-from datetime import datetime
-from os.path import exists
+from datetime import datetime, date
+import os
 import tkinter as tk
 
 class MyData:
@@ -34,13 +34,13 @@ class MyData:
         #print(df)
 
     def save_data():
-        MyData.df.to_csv('waitlist.csv', index=0)
+        MyData.df.to_csv(f'{today}-waitlist.csv', index=0)
         print('Saving Data...')
         MyData.show()
 
     def load_data():
         print('Loading Data...')
-        MyData.df = pd.read_csv('waitlist.csv')
+        MyData.df = pd.read_csv(f'{today}-waitlist.csv')
         for item in MyData.df['Name'].values.tolist():
             #print(item)
             MyData.nme.append(item)
@@ -60,31 +60,32 @@ class MyData:
         index = temp.index(x)
         #print(index)
         #print(temp)
-        del MyData.nme[index]
-        del MyData.sze[index]
-        del MyData.tme[index]
-        del MyData.sts[index]
+        MyData.nme.clear()
+        MyData.sze.clear()
+        MyData.tme.clear()
+        MyData.sts.clear()
         new_status = input(f'Would you Like to Seat {x}? (y/n): ')
         if 'y' in new_status:
             if x in MyData.df['Name'].values.tolist():
                 MyData.df.loc[index:index,'Status'] = 'Completed'
                 #MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
-                MyData.df.to_csv('waitlist.csv', index=False)
+                MyData.df.to_csv(f'{today}-waitlist.csv', index=False)
                 print('Customer Updated!')
+                MyData.load_data()
                 MyData.show()        
         else:
             pass
             
     def show():
-        MyData.df = pd.read_csv('waitlist.csv')
+        MyData.df = pd.read_csv(f'{today}-waitlist.csv')
         print(MyData.df[MyData.df.Status == 'waiting'])
     
     def show_completed():
-        MyData.df = pd.read_csv('waitlist.csv')
+        MyData.df = pd.read_csv(f'{today}-waitlist.csv')
         print(MyData.df[MyData.df.Status == 'Completed'])
     
     def show_all():
-        MyData.df = pd.read_csv('waitlist.csv')
+        MyData.df = pd.read_csv(f'{today}-waitlist.csv')
         print(MyData.df)
 
     def update_name(x):
@@ -92,7 +93,7 @@ class MyData:
             new_name = input('New Name: ')
             MyData.df['Name'] = MyData.df['Name'].replace([x], new_name)
             print(MyData.df)
-            MyData.df.to_csv('waitlist.csv', index=0)
+            MyData.df.to_csv(f'{today}-waitlist.csv', index=False)
             print('Updated Name!')
             MyData.show()
     
@@ -101,32 +102,33 @@ class MyData:
         index = temp.index(x)
         new_size = input('New Party Size: ')
         MyData.df.loc[index:index,'Party Size'] = new_size
-        MyData.df.to_csv('waitlist.csv', index=False)
+        MyData.df.to_csv(f'{today}-waitlist.csv', index=False)
         print('Updated Party Size!')
         MyData.show()
 
-            
     def remove(x):
         temp = MyData.df['Name'].values.tolist()
         index = temp.index(x)
         #print(index)
         #print(temp)
-        del MyData.nme[index]
-        del MyData.sze[index]
-        del MyData.tme[index]
-        del MyData.sts[index]
+        MyData.nme.pop(index)
+        MyData.sze.pop(index)
+        MyData.tme.pop(index)
+        MyData.sts.pop(index)
         if x in temp:
             MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
-            print(MyData.df)
             MyData.save_data()
+            MyData.show()
             print('Removed Name!')
 
 #Initialize
-if exists('waitlist.csv'):
-    MyData.load_data()
-else:
+today = date.today()
+print(today)
+if not os.path.exists(f'{today}-waitlist.csv'):
     MyData.df = pd.DataFrame(MyData.data)
-    MyData.df.to_csv('waitlist.csv')
+    MyData.df.to_csv(f'{today}-waitlist.csv')
+else:
+    pass
 
 #Main Loop
 while True:
