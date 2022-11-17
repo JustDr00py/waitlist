@@ -54,6 +54,7 @@ class MyData:
             #print(item)
             MyData.sts.append(item)
         print(MyData.df)
+        
     def seat(x):
         temp = MyData.df['Name'].values.tolist()
         index = temp.index(x)
