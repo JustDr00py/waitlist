@@ -59,7 +59,7 @@ class MyData:
     
     def update_size(x):
         temp = MyData.df['Name'].values.tolist()
-        index = temp.index(x))
+        index = temp.index(x)
         new_size = input('New Party Size: ')
         MyData.df.loc[index:index,'Party Size'] = new_size
         #MyData.df['Party Size'] = MyData.df['Party Size'].replace([x], new_size)
