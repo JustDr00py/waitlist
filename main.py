@@ -77,9 +77,7 @@ else:
     df.to_csv('waitlist.csv')
 
 #Main Loop
-while count < 1000:
-    for item in df['Name'].values.tolist():
-        count+=1
+while True:
     q = input(f'What would you like to do? \n {options}: \n')
     if 'new' in q:
         new_data()
