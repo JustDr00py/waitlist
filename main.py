@@ -9,10 +9,8 @@ class MyData:
     sze = []
     tme = []
     sts = []
-    # dictionary of lists
     data = {'Name': nme, 'Party Size': sze, 'Time': tme, 'Status': sts}
     options = ['new', 'update', 'remove', 'show', 'seat']
-
     df = pd.DataFrame(data) 
  
     def __init__(self):
