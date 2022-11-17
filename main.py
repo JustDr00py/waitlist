@@ -30,7 +30,7 @@ def new_data():
 
 def save_data():
     global df
-    df.to_csv('waitlist.csv', index_col=0)
+    df.to_csv('waitlist.csv')
     print('Saving Data...')
 
 def load_data():
@@ -67,7 +67,7 @@ if exists('waitlist.csv'):
     load_data()
 else:
     df = pd.DataFrame(data)
-    df.to_csv('waitlist.csv', index_col=0)
+    df.to_csv('waitlist.csv')
 
 #Main Loop
 while count < 1000:
