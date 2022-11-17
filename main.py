@@ -68,8 +68,15 @@ class MyData:
             
     def show():
         MyData.df = pd.read_csv('waitlist.csv')
-        #print(MyData.df)
         print(MyData.df[MyData.df.Status == 'waiting'])
+    
+    def show_completed():
+        MyData.df = pd.read_csv('waitlist.csv')
+        print(MyData.df[MyData.df.Status == 'Completed'])
+    
+    def show_all():
+        MyData.df = pd.read_csv('waitlist.csv')
+        print(MyData.df)
 
     def update_name(x):
         if x in MyData.df['Name'].values.tolist():
@@ -123,9 +130,13 @@ while True:
     elif 'remove' in q:
         name = input('Who would you like to Remove?: \n')
         MyData.remove(name)
-    elif 'show' in q:
+    elif 'show' == q:
         MyData.show()
-    elif 'seat' in q:
+    elif 'show_completed' in q:
+        MyData.show_completed()
+    elif 'show_all' == q:
+        MyData.show_all()
+    elif 'seat' == q:
         MyData.show()
         name = input('Name of Party: ')
         MyData.seat(name)
