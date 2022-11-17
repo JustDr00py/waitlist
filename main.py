@@ -2,6 +2,7 @@ import pandas as pd
 from time import sleep
 from datetime import datetime
 from os.path import exists
+import tkinter as tk
 
 class MyData:
     nme = []
@@ -14,7 +15,7 @@ class MyData:
 
     df = pd.DataFrame(data) 
     def __init__(self):
-        pass
+        return
 
     def new_data():
         name = input('Name: ')
@@ -28,7 +29,7 @@ class MyData:
         #print(df)
 
     def save_data():
-        MyData.df.to_csv('waitlist.csv', index=False)
+        MyData.df.to_csv('waitlist.csv', index=0)
         print('Saving Data...')
 
     def load_data():
@@ -48,13 +49,29 @@ class MyData:
         MyData.df = pd.read_csv('waitlist.csv')
         print(MyData.df)
 
-    def update(x):
+    def update_name(x):
         if x in MyData.df['Name'].values.tolist():
             new_name = input('New Name: ')
             MyData.df['Name'] = MyData.df['Name'].replace([x], new_name)
             print(MyData.df)
-            MyData.df.to_csv('waitlist.csv', index=False)
+            MyData.df.to_csv('waitlist.csv', index=0)
             print('Updated Name!')
+    
+    def update_size(x):
+        temp = MyData.df['Name'].values.tolist()
+        index = temp.index(x)
+        print(index)
+        new_size = input('New Party Size: ')
+        MyData.df.loc[index:index,'Party Size'] = new_size
+        #MyData.df['Party Size'] = MyData.df['Party Size'].replace([x], new_size)
+        MyData.df.to_csv('waitlist.csv', index=False)
+        print('Updated Party Size!')
+            
+        """new_size = input('New Party Size: ')
+        MyData.df['Party Size'] = MyData.df['Party Size'].replace([x], new_size)
+        print(MyData.df)
+        
+        """
             
     def remove(x):
         if x in MyData.df['Name'].values.tolist():
@@ -62,7 +79,7 @@ class MyData:
             print(MyData.df)
             MyData.df.to_csv('waitlist.csv', index=False)
             print('Removed Name!')
-            
+
 #Initialize
 if exists('waitlist.csv'):
     MyData.load_data()
@@ -77,8 +94,15 @@ while True:
         MyData.new_data()
         MyData.save_data()
     if 'update' in q:
-        name = input('Who would you like to Update?: \n')
-        MyData.update(name)
+        what = input('What would you like to update?: \n name, size: ')
+        if 'size' in what:
+            MyData.show()
+            name = input('Name of Party: ')
+            MyData.update_size(name)
+        if 'name' in what:
+            MyData.show()
+            name = input('Who would you like to Update?: \n')
+            MyData.update_name(name)
     if 'remove' in q:
         name = input('Who would you like to Remove?: \n')
         MyData.remove(name)
