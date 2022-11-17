@@ -19,6 +19,7 @@ class MyData:
         return
 
     def new_data():
+        print(f'{MyData.nme}, {MyData.sze}, {MyData.tme}, {MyData.sts},')
         name = input('Name: ')
         MyData.nme.append(name)
         size = input('Size: ')    
@@ -29,6 +30,7 @@ class MyData:
         status = "waiting"
         MyData.sts.append(status)
         MyData.df = pd.DataFrame(MyData.data)
+        MyData.save_data()
         #print(df)
 
     def save_data():
@@ -51,10 +53,16 @@ class MyData:
         for item in MyData.df['Status'].values.tolist():
             #print(item)
             MyData.sts.append(item)
-    
+        print(MyData.df)
     def seat(x):
         temp = MyData.df['Name'].values.tolist()
         index = temp.index(x)
+        #print(index)
+        #print(temp)
+        del MyData.nme[index]
+        del MyData.sze[index]
+        del MyData.tme[index]
+        del MyData.sts[index]
         new_status = input(f'Would you Like to Seat {x}? (y/n): ')
         if 'y' in new_status:
             if x in MyData.df['Name'].values.tolist():
@@ -98,10 +106,18 @@ class MyData:
 
             
     def remove(x):
-        if x in MyData.df['Name'].values.tolist():
+        temp = MyData.df['Name'].values.tolist()
+        index = temp.index(x)
+        #print(index)
+        #print(temp)
+        del MyData.nme[index]
+        del MyData.sze[index]
+        del MyData.tme[index]
+        del MyData.sts[index]
+        if x in temp:
             MyData.df.drop(MyData.df.index[MyData.df['Name'] == x], inplace=True)
             print(MyData.df)
-            MyData.df.to_csv('waitlist.csv', index=False)
+            MyData.save_data()
             print('Removed Name!')
 
 #Initialize
@@ -116,7 +132,6 @@ while True:
     q = input(f'What would you like to do? \n {MyData.options}: \n')
     if 'new' in q:
         MyData.new_data()
-        MyData.save_data()
     elif 'update' in q:
         what = input('What would you like to update?: \n name, size: ')
         if 'size' in what:
@@ -132,7 +147,7 @@ while True:
         MyData.remove(name)
     elif 'show' == q:
         MyData.show()
-    elif 'show_completed' in q:
+    elif 'show_completed' == q:
         MyData.show_completed()
     elif 'show_all' == q:
         MyData.show_all()
