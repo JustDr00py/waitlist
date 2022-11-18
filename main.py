@@ -2,7 +2,6 @@ import pandas as pd
 from time import sleep
 from datetime import datetime, date
 import os
-import tkinter as tk
 
 class MyData:
     nme = []
